@@ -23,6 +23,9 @@ The overall file structure of this project is as follows. A brief description of
 │   ├───sd_card
 │   └───tb_axis_custom_dct
 ├───microblaze
+│   ├───compression-main
+│   ├───compression-main2
+│   ├───mirror-server
 └───python
 ```
 
