@@ -55,6 +55,7 @@ def do_full_image():
 
     return (image, image_compressed, image_decompressed, image_error, compression_ratio)
 
+
 def do_block():
     image = get_image(img_path + "\\" + img_name)
     # image = image[0:8, 0:8]  # only want the first block
