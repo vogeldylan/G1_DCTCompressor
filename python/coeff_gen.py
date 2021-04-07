@@ -1,11 +1,11 @@
 '''
-Generate a hex file for loading the coefficients into vivado
+Generate a hex file for loading the DCT coefficients into vivado
 '''
 
 import math as m
 from os import write
 
-FILENAME = 'D:\\xilinx-projects\\ECE532\\HealthVivado\\custom_dct\\custom_dct.srcs\\sources_1\\data_files\\dct_coeff.mem'
+FILENAME = 'ram_coeff.mem'
 BIT_DEPTH = 9
 
 def write_coeffs():

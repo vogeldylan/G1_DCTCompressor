@@ -7,7 +7,7 @@ lookup table indicies
 import math as m
 import numpy as np
 
-FILENAME = 'D:\\xilinx-projects\\ECE532\\HealthVivado\\custom_dct\\custom_dct.srcs\\sources_1\\data_files\\zigzag_lookup.mem'
+FILENAME = 'zigzag_lookup.mem'
 ADDR_WIDTH = 6 
 
 def write_zigzag():

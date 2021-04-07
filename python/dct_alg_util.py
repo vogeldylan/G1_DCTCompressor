@@ -25,15 +25,15 @@ import cv2
 # GLOBALS
 # =============================================================================
 
-# img_path = "C:\\Users\\vogel\\OneDrive\\University\\Winter 4\\ECE532\\Datasets\\complete_ms_data\\pompoms_ms\\pompoms_ms"
+# img_path = "."
 # img_name = "pompoms_ms_25.png"
-img_path = "C:\\Users\\vogel\\OneDrive\\University\\Winter 4\\ECE532\\Datasets\\complete_ms_data\\flowers_ms\\flowers_ms"
+img_path = "."
 img_name = "flowers_ms_31.png"
 
 coeff_name = "coeffs_sim.log"
 # coeff_name = "coeff11.log"
 
-# img_path = "C:\\Users\\vogel\\OneDrive\\University\\Winter 4\\ECE532\\Datasets\\complete_ms_data\\fake_and_real_lemon_slices_ms\\fake_and_real_lemon_slices_ms"
+# img_path = "."
 # img_name = "fake_and_real_lemon_slices_ms_31.png"
 
 DCT_BLOCK_SIZE = 8

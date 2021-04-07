@@ -20,10 +20,10 @@ import cv2
 from os import write
 from dct_alg_util import get_image, get_next_dct_block
 
-img_path = "C:\\Users\\vogel\\OneDrive\\University\\Winter 4\\ECE532\\Datasets\\complete_ms_data\\flowers_ms\\flowers_ms"
+img_path = "."
 img_name = "flowers_ms_31.png"
 
-FILENAME = 'D:\\xilinx-projects\\ECE532\\HealthVivado\\custom_dct\\custom_dct.srcs\\sources_1\\data_files\\dct_test_block.mem'
+FILENAME = 'dct_test_block.mem'
 BIT_DEPTH = 8
 
 def write_test_block():

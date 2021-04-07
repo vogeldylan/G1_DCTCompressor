@@ -10,7 +10,7 @@ log scale)
 import math as m
 import numpy as np
 
-FILENAME = 'D:\\xilinx-projects\\ECE532\\HealthVivado\\custom_dct\\custom_dct.srcs\\sources_1\\data_files\\quant_coeff.mem'
+FILENAME = 'quant_coeff.mem'
 BIT_DEPTH = 8 # this doesn't really matter, just be sure to set your quantization array to this in verilog
 
 def write_quants():
