@@ -90,7 +90,7 @@ As before, you'll have to have access to the relevant Xilinx IP if you'd like to
 
 Over the course of the project we created a lot of Python scripts to either generate memory files, test the network interface, or test the DCT algorithm itself. This folder contains the complete set of these scripts, along with a test image. The test image comes from the Columbia University [CAVE Multispectral Image Database](https://www.cs.columbia.edu/CAVE/databases/multispectral/).
 
-Perhaps the most important to using the DCT block itstelf would be `coeff_gen.py` and `quantization_gen.py'. These are needed for re-generating the DCT coefficients and quantization bit-shifts. The `host-pc-uart.py` file is used for transferring data to FPGA1 over UART, and the `pc-client.py` file is used for receiving the run-length encoded coefficients. 
+Perhaps the most important to using the DCT block itstelf would be `coeff_gen.py` and `quantization_gen.py`. These are needed for re-generating the DCT coefficients and quantization bit-shifts. The `host-pc-uart.py` file is used for transferring data to FPGA1 over UART, and the `pc-client.py` file is used for receiving the run-length encoded coefficients. 
 
 ## Usage
 
