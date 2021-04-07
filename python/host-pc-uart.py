@@ -6,13 +6,13 @@ import struct
 import time
 import numpy as np
 
-'''
+"""
 some references
 1. https://maker.pro/pic/tutorial/introduction-to-python-serial-ports
 2. Pyserial API documentation https://pythonhosted.org/pyserial/pyserial_api.html#classes
 
 pip install opencv-python PySerial Pillow numpy
-'''
+"""
 
 # input_dir = "W:\ece532-project"
 input_dir = "L:\More-Documents\ROB501\ECE532"
@@ -23,7 +23,7 @@ FULL_TEST = True
 
 def read_img(num):
     # read each image as one band
-    if (num < 10):
+    if num < 10:
         img_str = "flowers_ms_0" + str(num) + ".png"
     else:
         img_str = "flowers_ms_" + str(num) + ".png"
@@ -31,9 +31,9 @@ def read_img(num):
     # use openCV to get 8-bit image
     img = cv.imread((os.path.join(input_dir, img_str)), cv.IMREAD_GRAYSCALE)
 
-    '''
+    """
     PIL's way to get full image depth, but not needed in this project
-    '''
+    """
     # img = Image.open((os.path.join(input_dir, img_str)))
     # img_pixels = np.array(img.getdata())
     # img_pixels = img_pixels.reshape(img.height, img.width)
@@ -62,6 +62,7 @@ def split_img(img, row_size, col_size):
 
     return img_list
 
+
 # add 0 to the rest of the array for a valid UART packet
 def add_padding(img_list):
     img_block_num_ori = img_list.shape[0]
@@ -73,27 +74,41 @@ def add_padding(img_list):
 
     return new_img_list
 
+
 def uart_op(img_list):
     packet_num = int((img_list.shape[0] / 7))
 
     print("Initializing serial port...")
-    print("expected block number {}, expected package number {}".format(img_list.shape[0], packet_num))
-    print("each block is a flattened image of size {}".format(len(img_list[0].flatten())))
+    print(
+        "expected block number {}, expected package number {}".format(
+            img_list.shape[0], packet_num
+        )
+    )
+    print(
+        "each block is a flattened image of size {}".format(len(img_list[0].flatten()))
+    )
 
-    ser = serial.Serial(port=ComPort, baudrate=115200, bytesize=8, timeout=0, stopbits=serial.STOPBITS_ONE, rtscts=1)
+    ser = serial.Serial(
+        port=ComPort,
+        baudrate=115200,
+        bytesize=8,
+        timeout=0,
+        stopbits=serial.STOPBITS_ONE,
+        rtscts=1,
+    )
 
-    while (1):
+    while 1:
         # sending one full image for FULL_TEST
-        if (FULL_TEST):
+        if FULL_TEST:
             for i in range(packet_num):
-                if (i > 0):
+                if i > 0:
                     ser.open()
                     # time.sleep(3)
                     # can't sleep, has time drift
 
                     # use uart handshake
                     rec = ser.read().decode("ASCII")
-                    while (rec != "!"):
+                    while rec != "!":
                         rec = ser.read().decode("ASCII")
 
                 for k in range(7):
@@ -102,7 +117,7 @@ def uart_op(img_list):
                     for j in range(len(img_payload)):
                         # send one pixel, 8-bit at a time
                         # use B to represent unsigned char
-                        sendData = struct.pack('>B', img_payload[j])
+                        sendData = struct.pack(">B", img_payload[j])
                         x = ser.write(sendData)
 
                 ser.close()
@@ -112,7 +127,7 @@ def uart_op(img_list):
         else:
             for i in range(int(UART_BUFFER_SIZE / 2)):
                 # send a 2-byte number at a time
-                sendData = struct.pack('>H', img_list[i])
+                sendData = struct.pack(">H", img_list[i])
                 x = ser.write(sendData)
             break
 
@@ -120,7 +135,7 @@ def uart_op(img_list):
     print("Done sending image, closed serial port")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # image input
     img = read_img(31)
     # split image into 8x8 blocks
@@ -134,4 +149,3 @@ if __name__ == '__main__':
     uart_op(img_list_pad)
     cv.imshow("original small img", img_smol[1])
     cv.waitKey()
-
