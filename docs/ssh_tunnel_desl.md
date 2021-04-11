@@ -24,10 +24,10 @@ This process will let you connect your local computer to a remote target on the 
 3. Start the hardware server by calling 
     - `C:\DESL\Xilinx\Vivado\2018.3\bin\hw_server.bat`. 
     - Note, I recommend creating a shortcut to the file on your desktop
-4. Call: `plink.exe <users>@<IP or domain>  -P <***p***> -2 -4 -T -N -C -R 3121:127.0.0.1:3121`
+4. Call: `plink.exe <users>@<IP or domain>  -P <port> -2 -4 -T -N -C -R 3121:127.0.0.1:3121`
     - Replace `<users>` with your Windows username
     - Replace `<IP or domain>` with the public IP of your router or computer
-    - Replace `<***p***>` with the public port you're forwarding or using for SSH, depending on your config.
+    - Replace `<port>` with the public port ***p*** you're forwarding or using for SSH, depending on your config.
     - Learn more about the flags [here](https://www.ssh.com/ssh/putty/putty-manuals/0.68/Chapter7.html#plink-options) 
     - Note, you can use any port (not just 3121) but you need to launch hw_server with the correct option
     - Note, you will be prompted for the password and then no shell will come up. This is specified by the -N option, which tells plink not to start a shell
