@@ -11,7 +11,46 @@ We only got about ~2/3 of that working by the end of the project, but hopefully 
 ## Project Introduction
 You can find all of our presentations and our final report in the `docs` folder. This is a great starting point if you're looking to learn more about the project, what our goals were, and how far we got with the project.
 
-## File Structure
+## Usage
+
+The [Repository Structure](#repository-structure) section contains a pretty good description of all the different folders and would probably give you some good ideas for how to use them. However, here's some notes for using the modules:
+
+### axis_custom_dct
+
+If you want to use the entire DCT block, simply grab the custom ip from `ip_repo`. Otherwise, you can mix and match the individual module files under `src`. An example of the DCT block output is shown below. Note that there is still an issue with clipping, which can be seen as the noise in the decompressed image in the lower-left corner
+
+![Output of the DCT module on a test image][dct_output_img]
+
+[dct_output_img]: figures/image_decomp.png
+
+The top level DCT module (without AXI Stream) is `dct_main.v`. This module defines a common set of parameters which are used in all the other modules:
+
+1. `DATA_WIDTH`: Sets the width of the input pixel coefficients (default: 8)
+2. `COEFF_WIDTH`:  Sets the width of the DCT coefficients (default: 9)*
+3. `FIRST_STAGE_WIDTH`: Output width of the 1D DCT row stage (default: 21)
+4. `SECOND_STAGE_WIDTH`: Output width of the 1D DCT column stage (default: 25)
+5. `QUANT_STAGE_WIDTH`: Output width of the quantizer stage (default: 14)
+6. `RUNL_STAGE_WIDTH`: Output width of the run-length encoder stage; should be strictly greater than the quantizer stage output (default: 16)
+*Note that the coefficient memory file `dct_coeff.mem` also needs to be regenerated when this parameter is changed.
+
+The `custom_dct_axis.v` module also defines `C_AXIS_TDATA_WIDTH`, which sets the AXI Stream width and should be left at 32 unless you're changing `RUNL_STAGE_WIDTH`.
+
+### sd_card
+
+This module allows for AXI interaction with an SD card. Again, you could simply pull the `ip_repo` folder and use the custom IP. The base SD card module was taken from [Introductory Digital Systems Laboratory (6.111)](http://web.mit.edu/6.111/www/f2015/tools/sd_controller.v) at MIT, and is included in its original form. The other files simply generate an AXI wrapper for the module. Some example C code for interfacing with the module can be found under [compression-main](./microblaze/compression-main) as `sd_card.c` and `sd_card.h`.
+
+### networking
+
+The networking code under [microblaze](./microblaze) is fairly application specific, but you could deploy it as a starting point on your own FPGA once you generate the board files. A more detailed description of each folder is provided in the [microblaze](#microblaze) section of this readme.
+
+### Python
+
+Likewise, the python code is also fairly application specific. Perhaps the most useful would be `dct_alg_util.py`, which contains our custom class for performing DCT compression and decompression. It has served us pretty well for debugging and testing out our algorithm. The `dct_alg_tstcases.py` file contains some test cases for the code, and is a good starting point for using it.
+
+The only other important files for using the DCT block itself would be `coeff_gen.py` and `quantization_gen.py`. These are needed for re-generating the DCT coefficients and quantization bit-shifts. The `host-pc-uart.py` file is used for transferring data to FPGA1 over UART, and the `pc-client.py` file is used for receiving the run-length encoded coefficients. 
+
+
+## Repository Structure
 
 The overall file structure of this project is as follows. A brief description of each of the folders is provided below
 
@@ -111,11 +150,7 @@ This requires the EthernetLite IP in hardware, and is mostly inspired from the L
 
 Over the course of the project we created a lot of Python scripts to either generate memory files, test the network interface, or test the DCT algorithm itself. This folder contains the complete set of these scripts, along with a test image. The test image comes from the Columbia University [CAVE Multispectral Image Database](https://www.cs.columbia.edu/CAVE/databases/multispectral/).
 
-Perhaps the most important to using the DCT block itstelf would be `coeff_gen.py` and `quantization_gen.py`. These are needed for re-generating the DCT coefficients and quantization bit-shifts. The `host-pc-uart.py` file is used for transferring data to FPGA1 over UART, and the `pc-client.py` file is used for receiving the run-length encoded coefficients. 
-
-## Usage
-
-( include the customization parameters for the different blocks )
+Perhaps the most important to using the DCT block itself would be `coeff_gen.py` and `quantization_gen.py`. These are needed for re-generating the DCT coefficients and quantization bit-shifts. The `host-pc-uart.py` file is used for transferring data to FPGA1 over UART, and the `pc-client.py` file is used for receiving the run-length encoded coefficients. 
 
 
 ## Contributions & Support
