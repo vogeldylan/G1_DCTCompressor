@@ -57,7 +57,7 @@ The overall file structure of this project is as follows. A brief description of
 ``` bash
 ├───docs
 ├───figures
-├───fpga
+├───src
 │   ├───axis_custom_dct
 │   ├───sd_card
 │   └───tb_axis_custom_dct
@@ -74,7 +74,7 @@ Contains our project presentations and final report, for reference.
 ### figures
 Contains some figures used in this README.
 
-### fpga 
+### src
 This folder contains all FPGA-related modules that we built for the project. Specifically, there is a dedicated `axis_custom_dct` and `sd_card` folder related to all the DCT and SD card modules, respectively. There is also a `tb_axis_custom_dct` folder which contains the block diagram and simulation files for performing a test of the custom DCT module using the Xilinx AXI VIP. 
 
 #### axis_custom_dct
@@ -133,8 +133,6 @@ This folder contains all the source code (in C) for the first program uploaded t
 UART is set to baud rate 115200 in hardware. Writing to SD card is the most time consuming operation, takes about 0.8 seconds per write.
 
 #### Compression-main2
-
-(Sorry for the bad naming scheme)
 
 This folder contains all the source code (in C) for the second program uploaded to FPGA#1 Microblaze microprocessor. It reads the image pixel intensities from SD card, pass them to DCT for compression, and read back the coefficients. It then assembles coefficients into a custom packet format and sends them to FPGA#2 over TCP.
 
