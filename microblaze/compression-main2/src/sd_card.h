@@ -2,7 +2,7 @@
  * sd_card.h
  *
  *  Created on: Mar 16, 2021
- *      Author: richa513
+ *      Author: Brytni Richards
  */
 
 #ifndef SRC_SD_CARD_H_
@@ -14,7 +14,6 @@
 #include "xil_io.h"
 #include "sleep.h"
 
-#define SD_CARD_ADDR	0x44A10000
 #define SPI_SD_ADDR		0x44A00000
 #define SD_CMD_REG		0
 #define SD_STATUS_REG	4
@@ -22,10 +21,9 @@
 #define SD_DEBUG_REG	12 //SD card state
 #define SD_WRITE_REG	16 //Data to write to SD card
 #define SD_RD_DATA_REG	20 //Data read from SD card
-//#define SD_CLOCK		24 //SD card clock
 #define SD_RAM_CMD_REG	24 //Temp RAM storage commands
-#define SD_WADDR_REG	28
-#define SD_RADDR_REG	32
+#define SD_WADDR_REG	28 //Write RAM Address
+#define SD_RADDR_REG	32 //Read RAM Address
 
 // CMD register macros
 #define CMD_RESET		0b1
@@ -35,7 +33,7 @@
 #define CMD_RAM_WRITE	0b10
 #define CMD_RAM_READ	0b100
 
-//Writes to AXI register - Base address assumed to be in xparameters
+//Writes to AXI register
 #define XSPI_AXI_WRITE(address, data) \
 	Xil_Out32((SPI_SD_ADDR) + (address), (data))
 //Reads from AXI register
